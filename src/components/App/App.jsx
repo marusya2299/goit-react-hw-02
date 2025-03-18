@@ -35,7 +35,7 @@ export default function App(){
         updateFeedback={updateFeedback} 
         resetFeedback={resetFeedback} 
       />
-      {totalFeedback  === 0 ? <Notification /> : <Feedback {...values} positiveFeedback={positiveFeedback} />}
+      {totalFeedback  === 0 ? <Notification /> : <Feedback {...values} positiveFeedback={positiveFeedback} totalFeedback={totalFeedback} />}
     </>
   )
 
