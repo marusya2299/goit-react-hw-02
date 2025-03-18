@@ -1,6 +1,7 @@
 import Description from "../Description/Description";
 import Feedback from "../Feedback/Feedback";
 import Options from "../Options/Options";
+import Notification from "../Notification/Notification";
 
 import { useState, useEffect } from 'react';
 
@@ -22,23 +23,20 @@ export default function App(){
     setValues({good: 0, neutral: 0, bad: 0});
   }
 
-  if (values.good+values.neutral+values.bad === 0) {
-    return(
-      <>
-        <Description />
-        <Options flag={false} updateFeedback={updateFeedback} resetFeedback={resetFeedback} />
-        <p>No feedback yet</p>
-      </>
-    )
-  }
-  else{
-    return(
-      <>
-        <Description />
-        <Options flag={true} updateFeedback={updateFeedback} resetFeedback={resetFeedback} />
-        <Feedback good={values.good} neutral={values.neutral} bad={values.bad} />
-      </>
-    )
+  const totalFeedback  = values.good + values.neutral + values.bad;
+  const positiveFeedback = totalFeedback  > 0 ? Math.round((values.good / totalFeedback ) * 100) : 0;
 
-  }
+
+  return (
+    <>
+      <Description />
+      <Options 
+        totalFeedback ={totalFeedback } 
+        updateFeedback={updateFeedback} 
+        resetFeedback={resetFeedback} 
+      />
+      {totalFeedback  === 0 ? <Notification /> : <Feedback {...values} positiveFeedback={positiveFeedback} />}
+    </>
+  )
+
 }
